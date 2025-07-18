@@ -23,7 +23,6 @@
     </div>
 
     <script>
-
         let hrs = document.getElementById("hrs");
         let min = document.getElementById("min");
         let sec = document.getElementById("sec");
@@ -36,77 +35,72 @@
             sec.innerHTML = (currentTime.getSeconds()<10?"0":"") + currentTime.getSeconds();
         },1000)
 
-        
-    let wakeLock = null;
-    const button = document.getElementById('toggleButton');
+        let wakeLock = null;
+        const button = document.getElementById('toggleButton');
 
-    // Request wake lock
-    async function requestWakeLock() {
-      try {
-        if ('wakeLock' in navigator) {
-          wakeLock = await navigator.wakeLock.request('screen');
-          wakeLock.addEventListener('release', () => {
-            console.log('Wake Lock released');
-          });
-          console.log('Wake Lock active');
+        // Request wake lock
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                wakeLock = await navigator.wakeLock.request('screen');
+                wakeLock.addEventListener('release', () => {
+                    console.log('Wake Lock released');
+                });
+                console.log('Wake Lock active');
+                }
+            } catch (err) {
+                console.error(`Wake Lock error: ${err.name}, ${err.message}`);
+            }
         }
-      } catch (err) {
-        console.error(`Wake Lock error: ${err.name}, ${err.message}`);
-      }
-    }
 
-    // Release wake lock
-    async function releaseWakeLock() {
-      if (wakeLock) {
-        await wakeLock.release();
-        wakeLock = null;
-        console.log('Wake Lock manually released');
-      }
-    }
+        // Release wake lock
+        async function releaseWakeLock() {
+            if (wakeLock) {
+                await wakeLock.release();
+                wakeLock = null;
+                console.log('Wake Lock manually released');
+            }
+        }
 
-    // Enter fullscreen
-    function enterFullScreen() {
-      const elem = document.documentElement;
-      if (elem.requestFullscreen) return elem.requestFullscreen();
-      if (elem.webkitRequestFullscreen) return elem.webkitRequestFullscreen(); // Safari
-      if (elem.msRequestFullscreen) return elem.msRequestFullscreen(); // IE11
-    }
+        // Enter fullscreen
+        function enterFullScreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) return elem.requestFullscreen();
+            if (elem.webkitRequestFullscreen) return elem.webkitRequestFullscreen(); // Safari
+            if (elem.msRequestFullscreen) return elem.msRequestFullscreen(); // IE11
+        }
 
-    // Exit fullscreen
-    function exitFullScreen() {
-      if (document.exitFullscreen) return document.exitFullscreen();
-      if (document.webkitExitFullscreen) return document.webkitExitFullscreen(); // Safari
-      if (document.msExitFullscreen) return document.msExitFullscreen(); // IE11
-    }
+        // Exit fullscreen
+        function exitFullScreen() {
+            if (document.exitFullscreen) return document.exitFullscreen();
+            if (document.webkitExitFullscreen) return document.webkitExitFullscreen(); // Safari
+            if (document.msExitFullscreen) return document.msExitFullscreen(); // IE11
+        }
 
-    // Check if we're in fullscreen
-    function isFullScreen() {
-      return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-    }
+        // Check if we're in fullscreen
+        function isFullScreen() {
+            return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+        }
 
-    // Button toggle logic
-    button.addEventListener('click', async () => {
-      if (isFullScreen()) {
-        await exitFullScreen();
-        await releaseWakeLock();
-        button.textContent = 'Enter Fullscreen & Stay Awake';
-      } else {
-        await enterFullScreen();
-        await requestWakeLock();
-        button.textContent = 'Exit Fullscreen & Release Wake Lock';
-      }
-    });
+        // Button toggle logic
+        button.addEventListener('click', async () => {
+            if (isFullScreen()) {
+                await exitFullScreen();
+                await releaseWakeLock();
+                button.textContent = 'Enter Fullscreen & Stay Awake';
+            } else {
+                await enterFullScreen();
+                await requestWakeLock();
+                button.textContent = 'Exit Fullscreen & Release Wake Lock';
+            }
+        });
 
-    // Reacquire wake lock if needed
-    document.addEventListener('visibilitychange', async () => {
-      if (wakeLock !== null && document.visibilityState === 'visible') {
-        await requestWakeLock();
-      }
-    });
-
-
-        
-
+        // Reacquire wake lock if needed
+        document.addEventListener('visibilitychange', async () => {
+            if (wakeLock !== null && document.visibilityState === 'visible') {
+                await requestWakeLock();
+            }
+        });
     </script>
 </body>
 </html>
