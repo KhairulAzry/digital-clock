@@ -73,7 +73,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
-
+/* 
 #hrs::after{
     content: 'HOURS';
 }
@@ -84,7 +84,7 @@
 
 #sec::after{
     content: 'SEC';
-}
+} */
 
 .button-container{
     display: flex;

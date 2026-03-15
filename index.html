@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Clock</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <div class="hero">
-        <div class="container">
-            <div class="clock">
+<body class="bg-gray-900">
+    <main class="grid min-h-screen place-items-center px-6 py-24 sm:py-32 lg:px-8">
+        <div class="flex flex-col items-center gap-4 text-center">
+            <p class="text-base font-semibold text-indigo-400">Digital Clock</p>
+            <div class="mt-4 text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
                 <span id="hrs">00</span>
                 <span>:</span>
                 <span id="min">00</span>
                 <span>:</span>
                 <span id="sec">00</span>
             </div>
-            <div class="button-container">
-                <button id="toggleButton" class="toggle-button">Enter Fullscreen & Stay Awake</button>
+            <div class="mt-10 text-white/50 p-4">
+                <button id="toggleButton" class="px-3.5 py-2.5 text-[8px]">Enter Fullscreen & Stay Awake</button>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
         let hrs = document.getElementById("hrs");
