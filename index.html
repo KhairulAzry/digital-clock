@@ -18,6 +18,7 @@
                 <span id="min">00</span>
                 <span>:</span>
                 <span id="sec">00</span>
+                <span id="ampm">AM</span>
             </div>
             <div class="mt-10 text-white/50 p-4">
                 <button id="toggleButton" class="px-3.5 py-2.5 text-[8px]">Enter Fullscreen & Stay Awake</button>
@@ -29,13 +30,20 @@
         let hrs = document.getElementById("hrs");
         let min = document.getElementById("min");
         let sec = document.getElementById("sec");
+        let ampm = document.getElementById("ampm");
 
         setInterval(()=>{
             let currentTime = new Date();
+            let hours = currentTime.getHours();
+            let minutes = currentTime.getMinutes();
+            let seconds = currentTime.getSeconds();
+            let displayHours = hours % 12 || 12;
+            let period = hours >= 12 ? "PM" : "AM";
 
-            hrs.innerHTML = (currentTime.getHours()<10?"0":"") + currentTime.getHours();
-            min.innerHTML = (currentTime.getMinutes()<10?"0":"") + currentTime.getMinutes();
-            sec.innerHTML = (currentTime.getSeconds()<10?"0":"") + currentTime.getSeconds();
+            hrs.innerHTML = (displayHours<10?"0":"") + displayHours;
+            min.innerHTML = (minutes<10?"0":"") + minutes;
+            sec.innerHTML = (seconds<10?"0":"") + seconds;
+            ampm.textContent = period;
         },1000)
 
         let wakeLock = null;
